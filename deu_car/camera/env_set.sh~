@@ -1,0 +1,2 @@
+sudo cp kobuki_gazebo.urdf.xacro /opt/ros/kinetic/share/kobuki_description/urdf/
+sudo cp kobuki.urdf.xacro /opt/ros/kinetic/share/kobuki_description/urdf/
