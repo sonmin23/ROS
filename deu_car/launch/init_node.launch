@@ -1,4 +1,6 @@
 <launch>
-    <node name="blocking_bar" pkg="deu_car" type="blocking_bar.py"/>
-    <node name="stop_line" pkg = "deu_car" type="stop_line.py"/>
+    <node name="blocking_bar" pkg="deu_car" type="detect_blocking_bar.py"/>
+    <node name="stop_line" pkg = "deu_car" type="detect_stop_line.py"/>
+    <node name="obstacle" pkg = "deu_car" type="detect_obstacle.py"/>
+    <node name="stop_sign" pkg = "deu_car" type="detect_stop_sign.py"/>
 </launch>
