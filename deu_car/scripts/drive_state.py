@@ -15,6 +15,7 @@ from final_right_line import RightLineFinal
 from base_move import BaseMove
 from scourse_left_line import DetectLeftLineScourse
 from Tparking_right_line import DetectRightLineTparking
+from scourse_right_whiteline import RightWhiteLine
 
 blocking_toggle = False
 stop_line_toggle = False
@@ -167,12 +168,18 @@ class RefractionCourse(State):
                     rospy.sleep(3)
                     self.time = rospy.Time.now()
             if self.stop_line_check == 1:
-                driving_bot.start_line_trace('COURSE', 0.57)
+                # lane1
+                # driving_bot.start_line_trace('COURSE', 0.57)
+                # lane2
+                driving_bot.start_line_trace('COURSE', 0.4)
             elif self.stop_line_check == 2:
                 rospy.loginfo('ENTERING THE INTERSECTION')
                 return 'success'
             else:
-                driving_bot.start_line_trace('COURSE', 0.57)
+                # lane1
+                # driving_bot.start_line_trace('COURSE', 0.57)
+                # lane2
+                driving_bot.start_line_trace('COURSE', 0.3)
             rate.sleep()
 
 #Obstacle course code
@@ -341,39 +348,6 @@ class ParallelParking(State):
             rate.sleep()
 
 # lane 2 scourse
-# class Scourse(State):
-#     def __init__(self):
-#         global stop_line_toggle
-#         State.__init__(self, outcomes=['success'])
-#         self.cmd_vel_pub = rospy.Publisher('cmd_vel_mux/input/teleop', Twist, queue_size=1)
-#         self.twist = Twist()
-#         self.stop_line_check = 0
-#         self.check = 0
-#         self.course = 0
-#         self.checkp = 0
-#         self.time = rospy.Time.now()
-#
-#     def execute(self, userdata):
-#         rate = rospy.Rate(20)
-#         self.twist.angular.z = 0.1
-#         self.cmd_vel_pub.publish(self.twist)
-#         driving = RightWhiteLine()
-#         driving.areaindex = 20000
-#         while True:
-#             if stop_line_toggle == True:
-#                 if self.time + rospy.Duration(5) < rospy.Time.now():
-#                     # rospy.loginfo('DETECTOR STOP LINE')
-#                     self.stop_line_check = self.stop_line_check + 1
-#                     # rospy.sleep(3)
-#                     self.time = rospy.Time.now()
-#             if self.stop_line_check == 2:
-#                 rospy.loginfo('ENTERING THE INTERSECTION')
-#                 return 'success'
-#             if test == True:
-#                 return 'success'
-#             rate.sleep()
-
-#lane 1 scourse
 class Scourse(State):
     def __init__(self):
         global stop_line_toggle
@@ -382,47 +356,80 @@ class Scourse(State):
         self.twist = Twist()
         self.stop_line_check = 0
         self.check = 0
-        self.time = time.time()
-        self.state = 0
+        self.course = 0
+        self.checkp = 0
+        self.time = rospy.Time.now()
 
     def execute(self, userdata):
-        #########
-        # driving_bot = LineTracer()
-        scourse = DetectRightLineScource()
-        scourse.stop_line_cnt = 0
-        scourse.state = 0
-        ########
-        # scourse.stop_line_cnt = 0
-        # scourse.state = 0
         rate = rospy.Rate(20)
-
+        self.twist.angular.z = 0.1
+        self.cmd_vel_pub.publish(self.twist)
+        driving = RightWhiteLine()
+        driving.areaindex = 20000
         while True:
-            if self.state == 0 and scourse.stop_line_cnt == 3:
-                self.time = time.time()
-                self.state += 1
-            elif self.state == 1:
-                if self.time + 3.0 > time.time():
-                    self.twist.linear.x = 0.0
-                    self.twist.angular.z = 0.0
-                    self.cmd_vel_pub.publish(self.twist)
-                else:
-                    self.time = time.time()
-                    self.state += 1
-            elif self.state == 2:
-                if self.time + 4.5 > time.time():
-                    self.twist.linear.x = 0.9
-                    self.twist.angular.z = -0.27
-                    self.cmd_vel_pub.publish(self.twist)
-                else:
-                    self.time = time.time()
-                    self.state += 1
-                    scourse = DetectRightLineScource()
-                    scourse.state = 0
-                    scourse.stop_line_cnt = 2
-            elif self.state == 3:
-                if scourse.stop_line_cnt == 3:
-                    return 'success'
+            if stop_line_toggle == True:
+                if self.time + rospy.Duration(5) < rospy.Time.now():
+                    # rospy.loginfo('DETECTOR STOP LINE')
+                    self.stop_line_check = self.stop_line_check + 1
+                    # rospy.sleep(3)
+                    self.time = rospy.Time.now()
+            if self.stop_line_check == 2:
+                rospy.loginfo('ENTERING THE INTERSECTION')
+                return 'success'
+            # if test == True:
+            #     return 'success'
             rate.sleep()
+
+# #lane 1 scourse
+# class Scourse(State):
+#     def __init__(self):
+#         global stop_line_toggle
+#         State.__init__(self, outcomes=['success'])
+#         self.cmd_vel_pub = rospy.Publisher('cmd_vel_mux/input/teleop', Twist, queue_size=1)
+#         self.twist = Twist()
+#         self.stop_line_check = 0
+#         self.check = 0
+#         self.time = time.time()
+#         self.state = 0
+#
+#     def execute(self, userdata):
+#         #########
+#         # driving_bot = LineTracer()
+#         scourse = DetectRightLineScource()
+#         scourse.stop_line_cnt = 0
+#         scourse.state = 0
+#         ########
+#         # scourse.stop_line_cnt = 0
+#         # scourse.state = 0
+#         rate = rospy.Rate(20)
+#
+#         while True:
+#             if self.state == 0 and scourse.stop_line_cnt == 3:
+#                 self.time = time.time()
+#                 self.state += 1
+#             elif self.state == 1:
+#                 if self.time + 3.0 > time.time():
+#                     self.twist.linear.x = 0.0
+#                     self.twist.angular.z = 0.0
+#                     self.cmd_vel_pub.publish(self.twist)
+#                 else:
+#                     self.time = time.time()
+#                     self.state += 1
+#             elif self.state == 2:
+#                 if self.time + 4.5 > time.time():
+#                     self.twist.linear.x = 0.9
+#                     self.twist.angular.z = -0.27
+#                     self.cmd_vel_pub.publish(self.twist)
+#                 else:
+#                     self.time = time.time()
+#                     self.state += 1
+#                     scourse = DetectRightLineScource()
+#                     scourse.state = 0
+#                     scourse.stop_line_cnt = 2
+#             elif self.state == 3:
+#                 if scourse.stop_line_cnt == 3:
+#                     return 'success'
+#             rate.sleep()
 
 class EnterTcourse(State):
     def __init__(self):
@@ -443,7 +450,8 @@ class EnterTcourse(State):
 
                 if self.change_time + 1.0 > time.time():
                     self.move.set_velocity(0)
-                    self.move.set_angle(0.25)
+                    #lane 1
+                    #self.move.set_angle(0.25)
                     # rospy.loginfo('turn!')
                     self.move.go_forward()
 
@@ -455,8 +463,14 @@ class EnterTcourse(State):
                 self.move.set_velocity(0.9)
                 self.move.set_angle(0)
                 self.move.go_forward()
-
-                if self.change_time + 5.3 < time.time():
+                #lane1
+                # if self.change_time + 5.3 < time.time():
+                #     self.move.set_velocity(0)
+                #     self.move.set_angle(0)
+                #     self.move.go_forward()
+                #     return 'success'
+                #lane2
+                if self.change_time + 6.8 < time.time():
                     self.move.set_velocity(0)
                     self.move.set_angle(0)
                     self.move.go_forward()
@@ -476,7 +490,7 @@ class EnterTparking(State):
 
         while True:
 
-            if detectRight.state == 1:
+            if detectRight.state >= 1:
                 return 'success'
             self.time = rospy.Time.now()
             # print(">>>>>>>>>>>>>>>>>:", detectRight.state)
@@ -500,7 +514,7 @@ class OutTparkingCourse(State):
 
             if self.flag == 0:
                 self.move.set_velocity(0.3)
-                self.move.set_angle(-0.9)
+                self.move.set_angle(-0.95)
                 self.move.go_forward()
 
                 if self.change_time + 0.9 < time.time():
