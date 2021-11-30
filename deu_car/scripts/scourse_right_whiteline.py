@@ -95,6 +95,7 @@ class RightWhiteLine:
 
 
                         err = cx - w / 2
+                        # print('angle:', err)
                         self.robot_controller.set_velocity(self.velocity)
                         self.robot_controller.set_angle(-float(err) / 100)
                         self.robot_controller.go_forward()
@@ -106,6 +107,8 @@ class RightWhiteLine:
                 self.robot_controller.set_velocity(self.velocity)
                 self.robot_controller.set_angle(-0.1)
                 self.robot_controller.go_forward()
+            # cv2.imshow('whiteline',mask)
+            # cv2.waitKey(3)
         except:
             pass
 

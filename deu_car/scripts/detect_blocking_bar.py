@@ -48,6 +48,8 @@ class DetectBlockingBar():
             self.blocking_toggle = 'ON'
             self.blocking_toggle_pub.publish(self.blocking_toggle)
 
+        # cv2.imshow('blocking bar', mask)
+        # cv2.waitKey(3)
 
 if __name__ == "__main__":
     rospy.init_node('blocking_bar')

@@ -70,7 +70,7 @@ class CourseDetector:
             center_y = reduce(lambda x, y: x + y, y_point) / len(y_point)
             self.center = center_x
             cv2.circle(mask, (center_x, center_y), 20, (255, 0, 0), -1)
-
+            # print('center_x:', center_x, ', center_y:', center_y)
             _, contour, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
             self.contour = len(contour)

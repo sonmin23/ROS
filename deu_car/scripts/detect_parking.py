@@ -47,7 +47,7 @@ class DetectParking:
         search_top = 1 * h / 2
         search_bot = 3 * h / 4 + 20
 
-        # cv2.imshow('edges', edges)
+        # cv2.imshow('safteyzone', edges)
         M = cv2.moments(mask)
         _,contours,_ = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         self.cnt = len(contours)

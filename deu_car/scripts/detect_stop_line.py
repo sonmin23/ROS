@@ -53,7 +53,7 @@ class DetectStopLine():
                 self.stop_line_toggle = 'NO_STOP_LINE'
                 self.stop_line_pub.publish(self.stop_line_toggle)
 
-        # cv2.imshow('window', mask)
+        # cv2.imshow('stop line', mask)
         # cv2.waitKey(3)
 
 if __name__ == "__main__":

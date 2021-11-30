@@ -71,6 +71,7 @@ class StraightDetector:
             center_x = reduce(lambda x, y: x + y, x_point) / len(x_point)
             center_y = reduce(lambda x, y: x + y, y_point) / len(y_point)
             self.center = center_x
+            # print('center_x:', center_x, ', center_y:', center_y)
             cv2.circle(mask, (center_x, center_y), 20, (255, 0, 0), -1)
         # cv2.imshow('window',mask)
         # cv2.waitKey(3)

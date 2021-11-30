@@ -39,7 +39,7 @@ class DetectStopSign:
             else:
                 self.stop_sign_check = 'NO_STOP_SIGN'
                 self.stop_sign_pub.publish(self.stop_sign_check)
-        # cv2.imshow("dd", block_bar_mask)
+        # cv2.imshow("stop_sign", block_bar_mask)
         # cv2.waitKey(3)
 
 if __name__ == '__main__':

@@ -14,7 +14,7 @@ class BaseMove:
     def set_angle(self, angle):
         #rospy.loginfo('set robot angle = %s', self.twist.angular.z)
         self.twist.angular.z = angle
-        #rospy.loginfo('set robot angle = %s', self.twist.angular.z)
+        # rospy.loginfo('set robot angle = %s', self.twist.angular.z)
 
     def set_velocity(self, velocity):
         self.twist.linear.x = velocity
